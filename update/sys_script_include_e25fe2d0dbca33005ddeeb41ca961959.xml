@@ -11,7 +11,100 @@ GetServerInfo.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
    
 getServInfo: function()
 {
- return 'it is server ifno';
+	try
+		{
+//return 'it is server ifno';
+var sysid = //this.getParameter('sysparm_sys_id')   ;
+            this.getParameter('sysparm_userID');
+var t = ""  ;
+/*
+ var gr1 = new GlideRecord('sys_user');
+                                 gr1.query();  
+                                 while(gr1.next()){                           
+t =t + " " + 'cos';}
+*/
+/*win server*/
+var rec = new GlideRecord('cmdb_ci_win_server');
+
+rec.query();
+t = t + "cmdb_ci_win_server: " + rec.getRowCount() + "\n ";
+
+/* red hat+ win  server */
+
+var recA = new GlideRecord('cmdb_ci_server');
+	var queryString = "sys_class_name=cmdb_ci_win_server^ORsys_class_name=cmdb_ci_linux_server";
+
+recA.addEncodedQuery(queryString);
+recA.query();
+t = t + "cmdb_ci_server: " + recA.getRowCount() + "\n ";
+
+while(recA.next()){                           
+t =t + " " + recA.name+ " | ";
+}
+t =t +  "\n ";
+	var recAA = new GlideRecord('cmdb_ci_server');
+	
+
+recAA.addQuery('ram','>',2);
+recAA.query();
+t = t + "cmdb_ci_server over 2000  ram: " + recAA.getRowCount() + "\n ";
+
+while(recAA.next()){                           
+t =t + " " + recAA.name+ ' =' + recAA.ram   + " | ";
+}
+t =t +  "\n ";
+	  t = t + "server with datbase : " + "\n ";
+	var dbrec= new GlideRecord('cmdb_ci');
+
+var q =	 dbrec.addJoinQuery('cmdb_rel_ci','child','name');
+		//q.addCondition("type","In Rack");
+			q.addCondition('parent.sys_class_name', 'cmdb_ci_database');
+//q.addJoinQuery('cmdb_ci_database','name','parent');		
+			dbrec.addJoinQuery('cmdb_ci_server','name','name');
+
+	
+	dbrec.query();
+	        
+	while(dbrec.next()){
+			t= t+ dbrec.getValue('name') +' | ';			
+		}
+	t =t +  "\n ";
+	
+			
+			/*	  t = t + "add computer : " + "\n ";
+			var qc= new GlideRecord("cmdb_ci_computer");
+			var elementname ='name';
+			qc.initialize();
+			var gdt = new GlideDateTime();
+
+
+			
+			qc.setValue("name","JC" +gdt.getDisplayValue()) ;
+					   qc.insert();
+		t =t + " new element "+	qc.getElement('name');
+				t =t +  "\n ";
+				*/
+	
+  t = t + "update computer : " + "\n ";
+			var qu= new GlideRecord("cmdb_ci_computer");	
+			qu.addQuery('name','JC2019-06-11 07:01:13');
+
+while(qu.next())
+		{
+			qu.description ='update from  getserverinfo' + new GlideDateTime().getDisplayValue() ;
+		t =t + " uppdated descripton  in compueter JC2019-06-11 07:01:13" ;
+				t =t +  "\n ";
+		}
+	
+ return t;}
+	catch (e)
+		{
+			
+
+ 			gs.eventQueue('script.error', null,  e.message);
+			return  e.message;
+		}
+                               
 },
     type: 'GetServerInfo'
 });]]></script>
@@ -19,13 +112,13 @@ getServInfo: function()
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-06-11 08:19:43</sys_created_on>
         <sys_id>e25fe2d0dbca33005ddeeb41ca961959</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>54</sys_mod_count>
         <sys_name>GetServerInfo</sys_name>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
         <sys_update_name>sys_script_include_e25fe2d0dbca33005ddeeb41ca961959</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-06-11 08:47:56</sys_updated_on>
+        <sys_updated_on>2019-06-11 14:32:26</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_58872_needit.MyFavoritesAjax</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>MyFavoritesAjax</name>
+        <script><![CDATA[var MyFavoritesAjax = Class.create();
+MyFavoritesAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+ 
+	 /*
+	 * method available to client scripts call using:
+	 * var gajax = new GlideAjax("MyFavoritesAjax");
+	 * gajax.addParam("sysparm_name","getFavorites");
+	 */
+	getFavorites: function() { // build new response xml element for result
+         var result = this.newItem("result");
+	  result.setAttribute("message","returning all favorites");
+ 
+	  //add some favorite nodes with name and value attributes 
+         this._addFavorite("color","blue");
+         this._addFavorite("beer","lager");
+         this._addFavorite("pet","dog");
+       },
+	 _addFavorite: function(name, value) { 
+          var favs = this.newItem("favorite");
+	   favs.setAttribute("name",name);
+	   favs.setAttribute("value",value); },
+ 
+	type:"MyFavoritesAjax"
+ 
+ });]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-06-11 09:28:48</sys_created_on>
+        <sys_id>b36f3a10db0e33005ddeeb41ca961989</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>MyFavoritesAjax</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_include_b36f3a10db0e33005ddeeb41ca961989</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-06-11 09:49:30</sys_updated_on>
+    </sys_script_include>
+</record_update>
